@@ -57,7 +57,7 @@ function Header() {
             </Link>
             <Link
               className="font-semibold hover:text-red-400 cursor-pointer"
-              // to="/Journel"
+              // to="/home/Journel"
               to="/#"
             >
               Journel

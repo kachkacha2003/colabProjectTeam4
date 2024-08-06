@@ -11,7 +11,7 @@ interface Product {
 }
 
 const AboutProduct: React.FC = () => {
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const[sizes,setSizes]=useState([]);
 
   const handleSizeClick = (size: string) => {
     if (selectedSize === size) {
@@ -23,9 +23,11 @@ const AboutProduct: React.FC = () => {
 
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<Product | null>(null);
-
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const[color, setColor]=useState([]);
+console.log(color)
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchProduct = async () => {
       try {
         const response = await axios.get(
           `https://ann1.pythonanywhere.com/products/products/${id}/`
@@ -36,27 +38,54 @@ const AboutProduct: React.FC = () => {
       }
     };
 
+    const fetchColors = async () => {
+      try {
+        const response = await axios.get(
+          `https://ann1.pythonanywhere.com/products/features/${id}`
+        );
+        setColor(response.data);
+      } catch (error) {
+        console.error("Error fetching sizes:", error);
+      }
+    };
+
+
+    const fetchSizes = async () => {
+      try {
+        const response = await axios.get(
+          `https://ann1.pythonanywhere.com/products/features/${id}`
+        );
+        setSizes(response.data);
+      } catch (error) {
+        console.error("Error fetching sizes:", error);
+      }
+    };
+
     if (id) {
-      fetchProducts();
+      fetchProduct();
+      fetchSizes();
+      fetchColors();
     }
-  }, [id]);
+  
+  })
+  ;
 
   if (!product) {
-    return  <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
-    <div className="flex flex-col items-center justify-center space-y-4">
-      <div className="relative">
-        <div className="w-[110px] h-[100px] border-4 border-t-4 border-white rounded-full animate-spin"></div>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-white text-xl font-bold animate-bounce">Loading...</div>
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
+        <div className="flex flex-col items-center justify-center space-y-4">
+          <div className="relative">
+            <div className="w-[110px] h-[100px] border-4 border-t-4 border-white rounded-full animate-spin"></div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-white text-xl font-bold animate-bounce">Loading...</div>
+            </div>
+          </div>
+          <div className="text-white text-lg font-medium">Please wait while we get things ready!</div>
         </div>
       </div>
-      <div className="text-white text-lg font-medium">Please wait while we get things ready!</div>
-    </div>
-  </div>
+    );
   }
 
-
-  
   return (
     <div className="flex flex-col lg:flex-row items-center justify-between max-w-7xl mx-auto p-6">
       <div className="w-full lg:w-1/2 flex ">
@@ -71,10 +100,11 @@ const AboutProduct: React.FC = () => {
         <p className="text-lg text-gray-700 mb-4">{product.title}</p>
         <p className="text-xl text-gray-900 font-semibold mb-6">${product.price}</p>
 
-        <div className="mb-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">Size</h3>
-          <div className="flex space-x-4">
-      {["S", "M", "L", "XL" ,"2XL"].map((size) => (
+        {sizes.length > 0 && (
+  <div className="mb-6">
+    <h3 className="text-lg font-semibold text-gray-800 mb-2">Size</h3>
+    <div className="flex space-x-4">
+      {sizes.map((size) => (
         <button
           key={size}
           onClick={() => handleSizeClick(size)}
@@ -86,16 +116,15 @@ const AboutProduct: React.FC = () => {
         </button>
       ))}
     </div>
-        </div>
-
-        <div className="mb-6">
+  </div>
+)}
+        <div className="colors-div  mb-6">
           <h3 className="text-lg font-semibold text-gray-800 mb-2">Color</h3>
           <div className="flex space-x-4">
             <button className="w-10 h-10 rounded-full bg-gray-500 border-2 border-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400"></button>
           </div>
         </div>
 
-        {/* Quantity */}
         <div className="mb-6 flex items-center">
           <h3 className="text-lg font-semibold text-gray-800 mr-4">Quantity</h3>
           <div className="flex items-center border rounded-lg">
@@ -110,7 +139,6 @@ const AboutProduct: React.FC = () => {
           </div>
         </div>
 
-        {/* Add to Cart button */}
         <button className="w-full py-3 bg-black text-white rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400">
           Add to Cart
         </button>

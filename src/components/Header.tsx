@@ -38,10 +38,26 @@ function Header() {
         <div className="absolute top-0 left-0 w-[55%] h-[100vh] bg-gray-200 shadow-lg z-50">
           <div>
             <button className="p-[15px]" onClick={toggleSidebar}>
-              Close
+              X
             </button>
             <nav>
               <ul className="text-slate-950 my-[20px] text-[18px] font-[400px] p-[15px] flex flex-col gap-[20px]">
+                <li>
+                  <a
+                    className=" hover:text-[20px] cursor-pointer"
+                    href="#contact"
+                  >
+                    Log in
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className=" hover:text-[20px] cursor-pointer"
+                    href="#contact"
+                  >
+                    Sing up
+                  </a>
+                </li>
                 <li>
                   <a
                     className="  hover:text-[20px] cursor-pointer"

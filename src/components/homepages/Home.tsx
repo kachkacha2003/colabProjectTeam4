@@ -1,17 +1,12 @@
-import React from "react";
-import backgroundImage from "/public/img/content.png"; // Adjust the path as needed
-
 export default function Home() {
   return (
-    <div
-      className="flex bg-cover bg-center h-screen"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
-    >
-      <div className="mt-[200px] p-[20px] flex flex-col gap-[20px] w-[311px] items-baseline justify-center">
-        <h1 className="text-zinc-50 text-[24px]">
-          Elevate Your Style Timeless Fashion, Sustainable Choices
+    <div className="bg-cover bg-center h-screen flex flex-col justify-center relative">
+      <div className="absolute inset-0 bg-[url('/public/img/content.png')] md:bg-[url('/public/img/desktop1.png')] bg-cover bg-center h-full w-full"></div>
+      <div className="relative mt-52 p-5 flex flex-col gap-5 w-80 items-baseline justify-center md:p-[40px] md:w-auto z-10">
+        <h1 className="text-zinc-50 text-2xl md:mt-[100px] md:text-4xl">
+          Elevate Your Style <br /> Timeless Fashion, Sustainable <br /> Choices
         </h1>
-        <button className="cursor-pointer text-[14px] p-[10px] bg-white">
+        <button className="cursor-pointer text-sm p-2 bg-white md:p-3 md:w-[130px]">
           Shop Now
         </button>
       </div>

@@ -4,7 +4,7 @@ import bag from "/public/img/s.png";
 import sbag from "/public/img/product.png";
 import images from "/public/img/image.png";
 
-export default function Producttwo() {
+const Producttwo: React.FC = () => {
   const Information = [
     { img: bag, price: "283", title: "Classic Easy Zipper Tote" },
     { img: sbag, price: "383", title: "Classic Easy Zipper Tote" },
@@ -29,7 +29,7 @@ export default function Producttwo() {
     };
   }, []);
 
-  const handleDragStart = (index) => (event) => {
+  const handleDragStart = (event) => {
     setDragging(true);
     setStartPosition(
       event.type.includes("mouse") ? event.pageX : event.touches[0].clientX
@@ -46,7 +46,9 @@ export default function Producttwo() {
 
   const handleDragEnd = () => {
     setDragging(false);
-    setPrevTranslate(currentTranslate);
+    const width = window.innerWidth;
+    const currentSlide = Math.round(prevTranslate / -width);
+    setPrevTranslate(-currentSlide * width);
   };
 
   const swipeHandlers = useSwipeable({
@@ -63,7 +65,9 @@ export default function Producttwo() {
 
   return (
     <div className="flex flex-col p-5">
-      <h1>What to Wear Now</h1>
+      <h1 className="text-xl  md:px-[300px] font-bold mb-4">
+        What to Wear Now
+      </h1>
       {isMobile ? (
         <div className="relative max-w-lg overflow-hidden" {...swipeHandlers}>
           <div
@@ -76,11 +80,11 @@ export default function Producttwo() {
             {Information.map((item, index) => (
               <div
                 key={index}
-                className="product-item mt-[70px] flex-shrink-0 h-72 flex flex-col items-center"
-                onTouchStart={handleDragStart(index)}
+                className="product-item mt-16 flex-shrink-0 h-72 flex flex-col items-center"
+                onTouchStart={handleDragStart}
                 onTouchMove={handleDragMove}
                 onTouchEnd={handleDragEnd}
-                onMouseDown={handleDragStart(index)}
+                onMouseDown={handleDragStart}
                 onMouseMove={handleDragMove}
                 onMouseUp={handleDragEnd}
                 onMouseLeave={handleDragEnd}
@@ -89,43 +93,29 @@ export default function Producttwo() {
                   transition: dragging ? "none" : "transform 0.3s ease",
                 }}
               >
-                <img
-                  className="h-[218px] w-[200px]"
-                  src={item.img}
-                  alt={item.title}
-                />
-                <h2>{item.title}</h2>
-                <p>{item.price}</p>
+                <img className="h-56 w-52" src={item.img} alt={item.title} />
+                <h2 className="text-lg font-medium mt-2">{item.title}</h2>
+                <p className="text-sm text-gray-600">{item.price}</p>
               </div>
             ))}
           </div>
         </div>
       ) : (
-        <div className="flex justify-center">
+        <div className="flex gap-10 justify-center">
           {Information.map((item, index) => (
             <div
               key={index}
-              className="product-item mt-[70px] flex-shrink-0 h-72 flex flex-col items-center"
-              onMouseDown={handleDragStart(index)}
-              onMouseMove={handleDragMove}
-              onMouseUp={handleDragEnd}
-              onMouseLeave={handleDragEnd}
-              style={{
-                transform: `translateX(${currentTranslate}px)`,
-                transition: dragging ? "none" : "transform 0.3s ease",
-              }}
+              className="product-item mt-16 flex-shrink-0 h-72 flex flex-col items-center"
             >
-              <img
-                className="h-[218px] w-[200px]"
-                src={item.img}
-                alt={item.title}
-              />
-              <h2>{item.title}</h2>
-              <p>{item.price}</p>
+              <img className="h-56 w-52" src={item.img} alt={item.title} />
+              <h2 className="text-lg font-medium mt-2">{item.title}</h2>
+              <p className="text-sm text-gray-600">{item.price}</p>
             </div>
           ))}
         </div>
       )}
     </div>
   );
-}
+};
+
+export default Producttwo;

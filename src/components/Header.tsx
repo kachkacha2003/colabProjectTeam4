@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Burger from "/public/img/List.png";
 import Logo from "/public/img/Logo.png";
 import Search from "/public/img/MagnifyingGlass.png";

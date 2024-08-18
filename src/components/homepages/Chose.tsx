@@ -1,4 +1,3 @@
-import React from "react";
 import SMart from "/public/img/Collection banner (1).png";
 import SMarts from "/public/img/Collection banner (2).png";
 import smartsdes from "/public/img/deskroptsz.png";
@@ -7,7 +6,7 @@ import martsdes from "/public/img/Collectionbanner-deskrop.png";
 export default function Chose() {
   return (
     <div>
-      <div className="md:flex-row flex flex-col justify-center gap-[20px] p-[20px] md:gap-[40px]">
+      <div className="md:flex-row flex flex-col my-[40px] justify-center gap-[20px] p-[20px] md:gap-[40px]">
         <img
           className="md:hidden cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:shadow-[0px_10px_20px_rgba(0,128,0,0.2)]"
           src={SMart}

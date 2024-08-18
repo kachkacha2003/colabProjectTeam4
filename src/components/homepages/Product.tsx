@@ -1,10 +1,9 @@
-import React from "react";
 import Imas from "/public/img/Collection banner.png";
 import Cas from "/public/img/Collectionsbanner (3).png";
 
 export default function Product() {
   return (
-    <div className="p-[10px] md:px-[280px] my-[20px]">
+    <div className="p-[10px] md:px-[280px] mt-[20px] ">
       <h1 className="md:text-[20px] md:w-[570px]">
         Elevate your lifestyle with a more intelligent, superior wardrobe. Our
         range is crafted sustainably with longevity in mind.

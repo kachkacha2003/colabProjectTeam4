@@ -30,7 +30,7 @@ function Header() {
           <nav className="hidden md:flex items-center gap-[40px] text-slate-950">
             <a
               className="font-semibold hover:text-red-400 cursor-pointer"
-              href="#home"
+              href=""
             >
               Shop
             </a>
@@ -109,10 +109,7 @@ function Header() {
                     </a>
                   </li>
                   <li>
-                    <a
-                      className="hover:text-[20px] cursor-pointer"
-                      href="#home"
-                    >
+                    <a className="hover:text-[20px] cursor-pointer" href="">
                       Shop
                     </a>
                   </li>

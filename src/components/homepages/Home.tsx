@@ -6,7 +6,7 @@ export default function Home() {
         <h1 className="text-zinc-50 text-2xl md:mt-[100px] md:text-4xl">
           Elevate Your Style <br /> Timeless Fashion, Sustainable <br /> Choices
         </h1>
-        <button className="cursor-pointer text-sm p-2 bg-white md:p-3 md:w-[130px]">
+        <button className=" hover:scale-105 cursor-pointer text-sm p-2 bg-white md:p-3 md:w-[130px]">
           Shop Now
         </button>
       </div>

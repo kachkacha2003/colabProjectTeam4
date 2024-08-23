@@ -1,8 +1,12 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import {Registration} from './components/Registration';
-import Login from "./components/Login"
+import { Login } from './components/Login';
+
+
 
 function App() {
+
+
   return (
     <Router>
       <Routes>

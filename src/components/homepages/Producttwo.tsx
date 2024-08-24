@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
 import { useNavigate } from "react-router-dom";
 
@@ -18,6 +19,7 @@ const Producttwo: React.FC = () => {
   const [startPosition, setStartPosition] = useState(0);
   const [currentTranslate, setCurrentTranslate] = useState(0);
   const [prevTranslate, setPrevTranslate] = useState(0);
+  const navigate = useNavigate(); // Use navigate for routing
 
   useEffect(() => {
     const handleResize = () => {
@@ -36,7 +38,7 @@ const Producttwo: React.FC = () => {
           "https://ann1.pythonanywhere.com/products/products/"
         );
         const data = await response.json();
-        setProducts(data.slice(0, 5)); // Only take the first 5 products
+        setProducts(data.slice(0, 5));
       } catch (error) {
         console.error("Failed to fetch products:", error);
       }
@@ -44,6 +46,10 @@ const Producttwo: React.FC = () => {
 
     fetchProducts();
   }, []);
+
+  const handleProductClick = (id: string) => {
+    navigate(`/product/${id}`);
+  };
 
   const handleDragStart = (
     event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
@@ -105,6 +111,7 @@ const Producttwo: React.FC = () => {
               <div
                 key={index}
                 className="product-item w-[300px] flex-shrink-0 h-72 flex flex-col "
+                onClick={() => handleProductClick(item.id)}
                 onTouchStart={handleDragStart}
                 onTouchMove={handleDragMove}
                 onTouchEnd={handleDragEnd}
@@ -112,11 +119,6 @@ const Producttwo: React.FC = () => {
                 onMouseMove={handleDragMove}
                 onMouseUp={handleDragEnd}
                 onMouseLeave={handleDragEnd}
-                onClick={() => navigate(`/aboutProduct/${item.id}`)} // Moved onClick to the product item
-                style={{
-                  transform: `translateX(${currentTranslate}px)`,
-                  transition: dragging ? "none" : "transform 0.3s ease",
-                }}
               >
                 <img className="h-56 w-52" src={item.image} alt={item.title} />
                 <h2 className="text-lg font-medium mt-2">{item.name}</h2>
@@ -126,19 +128,25 @@ const Producttwo: React.FC = () => {
           </div>
         </div>
       ) : (
-        <div className="flex gap-10 justify-center">
+        <div className="flex gap-10 justify-center ">
           {products.map((item, index) => (
             <div
               key={index}
               className="cursor-pointer product-item duration-300 hover:scale-105 hover:shadow-[0px_15px_40px_rgba(63,10,255,0.5)]  md:w-[234px] flex-shrink-0 h-82 flex flex-col "
               onClick={() => navigate(`/aboutProduct/${item.id}`)} // Added onClick to each product item
             >
-              <img
-                className="h-56  w-[100%] flex items-center"
-                src={item.image}
-                alt={item.name}
-              />
-              <div className="flex  flex-col gap-[10px]">
+              <div className="flex items-end relative">
+                <img
+                  className="h-56 w-[100%] flex items-center"
+                  src={item.image}
+                  alt={item.name}
+                />
+                <p className="absolute ml-[220px] cursor-pointer">+</p>
+              </div>
+              <div
+                onClick={() => handleProductClick(item.id)}
+                className="flex flex-col gap-[10px]"
+              >
                 <h2 className="text-base font-medium mt-2">{item.name}</h2>
                 <p className="text-lg text-gray-600">{item.price}$</p>
               </div>

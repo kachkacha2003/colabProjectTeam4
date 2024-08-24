@@ -6,8 +6,10 @@ import Producttwo from "./components/Homepages/Producttwo";
 import Footer from "./components/Homepages/Footer";
 import Chose from "./components/Homepages/Chose";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useState } from "react";
 
 function App() {
+  const { Counter, setcount } = useState;
   return (
     <BrowserRouter>
       <Header />

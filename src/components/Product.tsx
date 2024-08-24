@@ -17,6 +17,7 @@ export default function Product() {
       }, []);
     
     const [product,setProduct]=useState<object>([])
+    console.log(product)
   return (
     <div className="product">
         

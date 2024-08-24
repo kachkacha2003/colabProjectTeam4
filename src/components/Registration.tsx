@@ -46,6 +46,7 @@ export function Registration() {
   });
 
   const onSubmit: SubmitHandler<IFormType> = (data) => {
+    // usenavigate homepage
     console.log(data);
   };
 //   function loadGapiScript(): Promise<void> {

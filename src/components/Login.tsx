@@ -31,7 +31,19 @@ export function Login() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<IFormType> = (data) => {
+   const  onSubmit: SubmitHandler<IFormType> = async (data) => {
+   const responseData=await axios.post('https://ann1.pythonanywhere.com/users/login/'
+, 
+  data
+)
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+// usenavigate home page
+console.log(responseData)
     console.log(data);
   };
 

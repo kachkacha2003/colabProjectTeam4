@@ -5,6 +5,7 @@ import Search from "/public/img/MagnifyingGlass.png";
 import Heart from "/public/img/Heart.png";
 import Bag from "/public/img/Bag.png";
 import x from "/public/img/black-x-mark-transparent-png-1.png";
+import { useNavigate } from "react-router-dom";
 
 function Header({ counter }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -16,6 +17,20 @@ function Header({ counter }) {
   const toggsearch = () => {
     setissearch(!issearch);
   };
+
+   const navigate=useNavigate();
+
+  const toLogin=()=>{
+   navigate("/login")
+  }
+  const toSignUp=()=>{
+    navigate("/register")
+  }
+  const toHome=()=>{
+    navigate("/home")
+  }
+
+
   return (
     <div>
       <div className="flex bg-white justify-between p-[15px] relative font-styrene">
@@ -26,7 +41,7 @@ function Header({ counter }) {
           onClick={toggleSidebar}
         />
         <div className="flex gap-[50px]">
-          <img className="cursor-pointer " src={Logo} alt="Logo" />
+          <img onClick={toHome} className="cursor-pointer " src={Logo} alt="Logo" />
           <nav className="hidden md:flex items-center gap-[40px] text-slate-950">
             <a
               className="font-semibold hover:text-red-400 cursor-pointer"
@@ -63,12 +78,14 @@ function Header({ counter }) {
             alt="Search"
           />
           <a
+          onClick={toLogin}
             className="hidden md:inline font-semibold hover:text-red-400 cursor-pointer"
             href="#services"
           >
             Log in
           </a>
           <a
+          onClick={toSignUp}
             className="hidden md:inline font-semibold hover:text-red-400 cursor-pointer"
             href="#contact"
           >
@@ -102,6 +119,7 @@ function Header({ counter }) {
                   </li>
                   <li>
                     <a
+                    onClick={toSignUp}
                       className="hover:text-[20px] cursor-pointer"
                       href="#signup"
                     >

@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
+interface Product {
+  image: string;
+  name: string;
+  price: string;
+  title: string;
+}
 
-const Producttwo: React.FC<{ addCard: () => void }> = ({ addCard }) => {
-  const [products, setProducts] = useState<any[]>([]);
+const Producttwo: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
   const [dragging, setDragging] = useState(false);
   const [startPosition, setStartPosition] = useState(0);

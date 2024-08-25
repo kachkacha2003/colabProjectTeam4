@@ -6,7 +6,7 @@ import Heart from "/public/img/Heart.png";
 import Bag from "/public/img/Bag.png";
 import x from "/public/img/black-x-mark-transparent-png-1.png";
 
-function Header() {
+function Header({ counter }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [issearch, setissearch] = useState(false);
 
@@ -80,7 +80,7 @@ function Header() {
           </div>
           <div className="flex gap-[3px] items-center">
             <img src={Bag} alt="Cart" />
-            <p>0</p>
+            <p>{counter}</p>
           </div>
         </div>
 

@@ -9,20 +9,24 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useState } from "react";
 
 function App() {
-  const { Counter, setcount } = useState;
+  const [counter, setCounter] = useState(0);
+
+  const addCard = () => {
+    setCounter(counter + 1);
+  };
+
   return (
     <BrowserRouter>
-      <Header />
+      <Header counter={counter} />
       <Routes>
         <Route
           path="/"
           element={
             <div>
               <Home />
-              <Product />
-              <Producttwo />
-              <Chose />
-              <Footer></Footer>
+              <Product addCard={addCard} />
+              <Producttwo addCard={addCard} /> <Chose />
+              <Footer />
             </div>
           }
         />

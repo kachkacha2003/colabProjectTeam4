@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
+
 interface Product {
+  id: string;
   image: string;
   name: string;
   price: string;
-  title: string;
 }
 
-const Producttwo: React.FC = () => {
+interface ProducttwoProps {
+  handleAddToCart: (
+    productId: number,
+    productName: string,
+    productPrice: number,
+    productImage: string
+  ) => void;
+}
+
+const Producttwo: React.FC<ProducttwoProps> = ({ handleAddToCart }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
   const [dragging, setDragging] = useState(false);
@@ -106,7 +116,7 @@ const Producttwo: React.FC = () => {
             {products.map((item, index) => (
               <div
                 key={index}
-                className="product-item w-[300px] flex-shrink-0 h-72 flex flex-col "
+                className="product-item w-[300px] flex-shrink-0 h-72 flex flex-col"
                 onClick={() => handleProductClick(item.id)}
                 onTouchStart={handleDragStart}
                 onTouchMove={handleDragMove}
@@ -116,9 +126,9 @@ const Producttwo: React.FC = () => {
                 onMouseUp={handleDragEnd}
                 onMouseLeave={handleDragEnd}
               >
-                <img className="h-56 w-52" src={item.image} alt={item.title} />
+                <img className="h-56 w-52" src={item.image} alt={item.name} />
                 <h2 className="text-lg font-medium mt-2">{item.name}</h2>
-                <p className="text-sm text-gray-600">{item.price}</p>
+                <p className="text-sm text-gray-600">{item.price}$</p>
               </div>
             ))}
           </div>
@@ -137,8 +147,15 @@ const Producttwo: React.FC = () => {
                   alt={item.name}
                 />
                 <p
+                  onClick={() =>
+                    handleAddToCart(
+                      Number(item.id),
+                      item.name,
+                      Number(item.price),
+                      item.image
+                    )
+                  }
                   className="absolute ml-[220px] cursor-pointer"
-                  onClick={addCard}
                 >
                   +
                 </p>

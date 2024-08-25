@@ -1,38 +1,64 @@
-import "./App.css";
+import { useState } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
-import Home from "./components/homepages/Home";
-import Product from "./components/homepages/Product";
-import Producttwo from "./components/homepages/Producttwo";
-import Footer from "./components/homepages/Footer";
-import Chose from "./components/homepages/Chose";
-
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./components/Homepages/Home";
+import Product from "./components/Homepages/Product";
+import Producttwo from "./components/Homepages/Producttwo";
+import Footer from "./components/Homepages/Footer";
+import Chose from "./components/Homepages/Chose";
 import { Registration } from "./components/Registration";
 import { Login } from "./components/Login";
 
-function App() {
-  const [counter, setCounter] = useState(0);
+interface CartItem {
+  productId: number;
+  productName: string;
+  productPrice: number;
+  productImage: string;
+  quantity: number;
+}
 
-  const addCard = () => {
-    setCounter(counter + 1);
+function App() {
+  const [cart, setCart] = useState<CartItem[]>([]);
+
+  const handleAddToCart = (
+    productId: number,
+    productName: string,
+    productPrice: number,
+    productImage: string
+  ) => {
+    setCart((prevCart) => {
+      const existingProduct = prevCart.find(
+        (item) => item.productId === productId
+      );
+      if (existingProduct) {
+        return prevCart.map((item) =>
+          item.productId === productId
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        return [
+          ...prevCart,
+          { productId, productName, productPrice, productImage, quantity: 1 },
+        ];
+      }
+    });
   };
 
   return (
     <BrowserRouter>
-      <Header counter={counter} />
+      <Header cart={cart} />
       <Routes>
-        {/* Authentication Routes */}
         <Route path="/register" element={<Registration />} />
         <Route path="/login" element={<Login />} />
-
-        {/* Main Route */}
+        <Route path="/" element={<Navigate to="/home" />} />
         <Route
           path="/home"
           element={
             <div>
               <Home />
               <Product />
-              <Producttwo />
+              <Producttwo handleAddToCart={handleAddToCart} />
               <Chose />
               <Footer />
             </div>

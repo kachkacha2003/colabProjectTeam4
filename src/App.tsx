@@ -20,7 +20,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         
         {/* Main Route */}
-        <Route path="/" element={
+        <Route path="/home" element={
           <div>
             <Home />
             <Product />

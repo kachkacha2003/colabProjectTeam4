@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useSwipeable } from "react-swipeable";
+import { useNavigate } from "react-router-dom";
+
 interface Product {
+  id: string; // Ensure that your product objects have an 'id' field
   image: string;
   name: string;
   price: string;
-  title:string;
+  title: string;
 }
 
 const Producttwo: React.FC = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
   const [dragging, setDragging] = useState(false);
@@ -26,7 +30,6 @@ const Producttwo: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    // Fetching the product data from the provided URL
     const fetchProducts = async () => {
       try {
         const response = await fetch(
@@ -109,6 +112,7 @@ const Producttwo: React.FC = () => {
                 onMouseMove={handleDragMove}
                 onMouseUp={handleDragEnd}
                 onMouseLeave={handleDragEnd}
+                onClick={() => navigate(`/aboutProduct/${item.id}`)} // Moved onClick to the product item
                 style={{
                   transform: `translateX(${currentTranslate}px)`,
                   transition: dragging ? "none" : "transform 0.3s ease",
@@ -127,13 +131,13 @@ const Producttwo: React.FC = () => {
             <div
               key={index}
               className="cursor-pointer product-item duration-300 hover:scale-105 hover:shadow-[0px_15px_40px_rgba(63,10,255,0.5)]  md:w-[234px] flex-shrink-0 h-82 flex flex-col "
+              onClick={() => navigate(`/aboutProduct/${item.id}`)} // Added onClick to each product item
             >
               <img
                 className="h-56  w-[100%] flex items-center"
                 src={item.image}
                 alt={item.name}
               />
-
               <div className="flex  flex-col gap-[10px]">
                 <h2 className="text-base font-medium mt-2">{item.name}</h2>
                 <p className="text-lg text-gray-600">{item.price}$</p>

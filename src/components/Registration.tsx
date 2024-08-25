@@ -211,7 +211,7 @@ export function Registration() {
               Already have an account?{" "}
               <a
                 className="text-yellow-500 cursor-pointer"
-                onClick={() => navigator("/login")}
+                onClick={() => navigate("/login")}
               >
                 Log in
               </a>

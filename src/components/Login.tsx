@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios, { AxiosResponse } from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface IFormType {
     username:string;
@@ -21,7 +22,13 @@ const schema = yup
   })
   .required();
 
+
+
 export function Login() {
+  const navigate=useNavigate();
+  const toHome=()=>{
+    navigate("/home")
+      }
 
   const {
     register,
@@ -30,23 +37,33 @@ export function Login() {
   } = useForm<IFormType>({
     resolver: yupResolver(schema),
   });
-
-   const  onSubmit: SubmitHandler<IFormType> = async (data) => {
-   const responseData=await axios.post('https://ann1.pythonanywhere.com/users/login/'
-, 
-  data
-)
-  .then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-// usenavigate home page
-console.log(responseData)
-    console.log(data);
+  const saveTokens = (accessToken: string, refreshToken: string) => {
+    localStorage.setItem('refreshToken', refreshToken);
+    localStorage.setItem('accessToken', accessToken);
   };
-
+  
+  const onSubmit: SubmitHandler<IFormType> = async (data) => {
+    try {
+      const response = await axios.post('https://ann1.pythonanywhere.com/users/login/', data);
+      
+      // Check if the response contains the tokens
+      if (response.data && response.data.accessToken && response.data.refreshToken) {
+        const { accessToken, refreshToken } = response.data;
+  
+        // Save tokens to localStorage
+        saveTokens(accessToken, refreshToken);
+  
+        // Navigate to the home page
+        toHome();
+      } else {
+        console.error('Login failed: Invalid credentials or no tokens returned.');
+        // You might want to show an error message to the user here
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      // Handle the error (e.g., show an error message to the user)
+    }
+  };
   async function loginWithGoogle(): Promise<void> {
     try {
         const authInstance = window.gapi.auth2.getAuthInstance();

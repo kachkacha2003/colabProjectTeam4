@@ -2,7 +2,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 // import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
+import axios from "axios";
 // import axios, { AxiosResponse } from "axios";
 
 interface IFormType {
@@ -34,7 +35,6 @@ const schema = yup
   .required();
 
 export function Registration() {
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -44,9 +44,16 @@ export function Registration() {
   } = useForm<IFormType>({
     resolver: yupResolver(schema),
   });
-
-  const onSubmit: SubmitHandler<IFormType> = (data) => {
-    // usenavigate homepage
+  const navigate=useNavigate()
+  const onSubmit: SubmitHandler<IFormType> = async (data) => {
+    try {
+      
+      const response = await axios.post("https://your-backend-url.com/api/register", data);
+      console.log("Registration successful:", response.data);
+      navigate("/home");
+    } catch (error) {
+      console.error("Error during registration:", error);
+    }
     console.log(data);
   };
 //   function loadGapiScript(): Promise<void> {
@@ -194,6 +201,7 @@ export function Registration() {
               
                <div className="md:pl-[50px]">
                <button
+              
                 className="mt-4 w-full md:w-[420px] h-16 bg-black text-white rounded-full"
                 type="submit"
               >
@@ -203,7 +211,7 @@ export function Registration() {
               Already have an account?{" "}
               <a
                 className="text-yellow-500 cursor-pointer"
-                onClick={() => navigate("/login")}
+                onClick={() => navigator("/login")}
               >
                 Log in
               </a>

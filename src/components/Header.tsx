@@ -5,7 +5,7 @@ import Search from "/public/img/MagnifyingGlass.png";
 import Heart from "/public/img/Heart.png";
 import Bag from "/public/img/Bag.png";
 import x from "/public/img/black-x-mark-transparent-png-1.png";
-import { useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 function Header() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -18,17 +18,17 @@ function Header() {
     setissearch(!issearch);
   };
 
-   const navigate=useNavigate();
+  //  const navigate=useNavigate();
 
-  const toLogin=()=>{
-   navigate("/login")
-  }
-  const toSignUp=()=>{
-    navigate("/register")
-  }
-  const toHome=()=>{
-    navigate("/home")
-  }
+  // const toLogin=()=>{
+  //  navigate("/login")
+  // }
+  // const toSignUp=()=>{
+  //   navigate("/register")
+  // }
+  // const toHome=()=>{
+  //   navigate("/home")
+  // }
 
 
   return (
@@ -41,7 +41,10 @@ function Header() {
           onClick={toggleSidebar}
         />
         <div className="flex gap-[50px]">
-          <img onClick={toHome} className="cursor-pointer " src={Logo} alt="Logo" />
+       <Link to="/home" >
+       <img  className="cursor-pointer " src={Logo} alt="Logo" />
+       
+       </Link>  
           <nav className="hidden md:flex items-center gap-[40px] text-slate-950">
             <a
               className="font-semibold hover:text-red-400 cursor-pointer"
@@ -63,7 +66,7 @@ function Header() {
             </a>
             <a
               className="font-semibold hover:text-red-400 cursor-pointer"
-              href="#contact"
+              
             >
               Journel
             </a>
@@ -77,20 +80,21 @@ function Header() {
             src={Search}
             alt="Search"
           />
-          <a
-          onClick={toLogin}
+          <Link
+          // onClick={toLogin}
+          to="/login"
             className="hidden md:inline font-semibold hover:text-red-400 cursor-pointer"
-            href="#services"
           >
             Log in
-          </a>
-          <a
-          onClick={toSignUp}
+          </Link>
+          <Link
+          // onClick={toSignUp}
+          to="/register"
             className="hidden md:inline font-semibold hover:text-red-400 cursor-pointer"
-            href="#contact"
+      
           >
             Sign up
-          </a>
+          </Link>
           <div className="flex gap-[3px] items-center">
             <img src={Heart} alt="Favorites" />
             <p>0</p>
@@ -110,50 +114,50 @@ function Header() {
               <nav>
                 <ul className="text-slate-950 my-[20px] text-[18px] font-[400px] p-[15px] flex flex-col gap-[20px]">
                   <li>
-                    <a
+                    <Link
                       className="hover:text-[20px] cursor-pointer"
-                      href="#login"
+                      to="/login"
                     >
                       Log in
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
-                    onClick={toSignUp}
+                    <Link
+           
                       className="hover:text-[20px] cursor-pointer"
-                      href="#signup"
+                      to="/register"
                     >
                       Sign up
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="hover:text-[20px] cursor-pointer" href="">
+                    <Link className="hover:text-[20px] cursor-pointer" to="/shop">
                       Shop
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
+                    <Link
                       className="hover:text-[20px] cursor-pointer"
-                      href="#about"
+                      to="/newArrivals"
                     >
                       New Arrivals
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
+                    <Link
                       className="hover:text-[20px] cursor-pointer"
-                      href="#services"
+                      to="/sales"
                     >
                       Sales
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
+                    <Link
                       className="hover:text-[20px] cursor-pointer"
-                      href="#contact"
+                      to="/journel"
                     >
                       Journel
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </nav>

@@ -15,7 +15,7 @@ const AboutProduct: React.FC = () => {
   const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchProducts = async () => {
       try {
         const response = await axios.get(
           `https://ann1.pythonanywhere.com/products/products/${id}/`
@@ -27,12 +27,12 @@ const AboutProduct: React.FC = () => {
     };
 
     if (id) {
-      fetchProduct();
+      fetchProducts();
     }
   }, [id]);
 
   if (!product) {
-    return <div>Loading...</div>; // Show a loading state while fetching
+    return <div>Loading...</div>; 
   }
 
   return (

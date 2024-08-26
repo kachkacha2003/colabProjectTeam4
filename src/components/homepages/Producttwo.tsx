@@ -3,7 +3,7 @@ import { useSwipeable } from "react-swipeable";
 import { useNavigate } from "react-router-dom";
 
 interface Product {
-  id: string; // Ensure that your product objects have an 'id' field
+  id: string; 
   image: string;
   name: string;
   price: string;

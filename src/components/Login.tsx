@@ -37,9 +37,9 @@ export function Login() {
   } = useForm<IFormType>({
     resolver: yupResolver(schema),
   });
-  const saveTokens = (accessToken: string, refreshToken: string) => {
-    localStorage.setItem('refreshToken', refreshToken);
-    localStorage.setItem('accessToken', accessToken);
+  const saveTokens = (access: string, refresh: string) => {
+    localStorage.setItem('refresh', refresh);
+    localStorage.setItem('access', access);
   };
   
   const onSubmit: SubmitHandler<IFormType> = async (data) => {
@@ -47,13 +47,9 @@ export function Login() {
       const response = await axios.post('https://ann1.pythonanywhere.com/users/login/', data);
       
       // Check if the response contains the tokens
-      if (response.data && response.data.accessToken && response.data.refreshToken) {
-        const { accessToken, refreshToken } = response.data;
-  
-        // Save tokens to localStorage
-        saveTokens(accessToken, refreshToken);
-  
-        // Navigate to the home page
+      if (response.data) {
+        const { access, refresh } = response.data;
+        saveTokens(refresh,access);
         toHome();
       } else {
         console.error('Login failed: Invalid credentials or no tokens returned.');

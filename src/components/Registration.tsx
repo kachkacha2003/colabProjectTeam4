@@ -46,9 +46,10 @@ export function Registration() {
   });
   const navigate=useNavigate()
   const onSubmit: SubmitHandler<IFormType> = async (data) => {
+    console.log(data);
     try {
-      
-      const response = await axios.post("https://your-backend-url.com/api/register", data);
+      console.log("lasha")
+      const response = await axios.post("https://ann1.pythonanywhere.com/users/register/", data);
       console.log("Registration successful:", response.data);
       navigate("/home");
     } catch (error) {

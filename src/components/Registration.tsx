@@ -26,7 +26,7 @@ const schema = yup
       .string()
       .oneOf([yup.ref("password")], "Passwords must match")
       .required("Please confirm your password"),
-    terms: yup.boolean().oneOf([true], "You must accept the terms and conditions"),
+    terms: yup.boolean().oneOf([false], "You must accept the terms and conditions"),
     email: yup
       .string()
       .email("Email is not valid")

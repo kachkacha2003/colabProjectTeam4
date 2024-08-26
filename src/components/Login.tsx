@@ -18,7 +18,7 @@ const schema = yup
   .object({
     username:yup.string().required("username is a required field"),
     password: yup.string().required("Password is a required field"),
-    terms: yup.boolean().oneOf([true], "You must accept the terms and conditions"),
+    terms: yup.boolean().oneOf([false], "You must accept the terms and conditions"),
   })
   .required();
 

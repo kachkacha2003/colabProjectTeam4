@@ -20,7 +20,7 @@ function Header() {
 
 
   return (
-    <div>
+    <div className="sticky top-0 z-[1000] ">
       <div className="flex bg-white justify-between p-[15px] relative font-styrene">
         <img
           className="cursor-pointer md:hidden"

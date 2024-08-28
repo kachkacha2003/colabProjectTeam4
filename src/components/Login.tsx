@@ -45,43 +45,52 @@ export function Login() {
   const onSubmit: SubmitHandler<IFormType> = async (data) => {
     try {
       const response = await axios.post('https://ann1.pythonanywhere.com/users/login/', data);
-      
-      // Check if the response contains the tokens
+
       if (response.data) {
         const { access, refresh } = response.data;
         saveTokens(refresh,access);
         toHome();
       } else {
         console.error('Login failed: Invalid credentials or no tokens returned.');
-        // You might want to show an error message to the user here
+
       }
     } catch (error) {
       console.error('Error during login:', error);
-      // Handle the error (e.g., show an error message to the user)
+
     }
   };
   async function loginWithGoogle(): Promise<void> {
     try {
-        const authInstance = window.gapi.auth2.getAuthInstance();
-        const googleUser: gapi.auth2.GoogleUser = await authInstance.signIn();
+        // Initialize Google Auth2 library if it's not already initialized
+        if (!window.gapi.auth2) {
+            await new Promise((resolve) => {
+                window.gapi.load('auth2', resolve);
+            });
+        }
 
+        const authInstance = window.gapi.auth2.getAuthInstance();
+        if (!authInstance) {
+            console.error('Google Auth instance not found.');
+            return;
+        }
+
+        const googleUser: gapi.auth2.GoogleUser = await authInstance.signIn();
         const idToken: string = googleUser.getAuthResponse().id_token;
 
+        // Send the token to your backend
         const response: AxiosResponse = await axios.post("https://ann1.pythonanywhere.com/auth/auth_google_login_create", {
             token: idToken
         });
 
         console.log('Login successful:', response.data);
-        
+
+        // Save token to local storage
+        localStorage.setItem('authToken', idToken);
+
     } catch (error: unknown) {
         console.error('Error during Google login:', error);
     }
 }
-
-
-  // function logoutUser() {
-  //   localStorage.removeItem('token');
-  // }
   return (
     <div className="flex items-center justify-center h-screen p-4  bg-[url(https://e0.pxfuel.com/wallpapers/655/814/desktop-wallpaper-dark-web-dark-developer.jpg)] ">
       <div className="flex bg-[#FFFBFA] rounded-[42px] overflow-hidden max-w-full md:max-w-[83rem] w-full h-[55rem]">
@@ -93,11 +102,16 @@ export function Login() {
         <div className="flex items-center flex-1 px-4 py-12 md:px-24">
           <div className="flex flex-col w-[100%]">
             <div className="loginWithGoogle flex flex-col md:flex-row justify-between mb-14">
-              <div onClick={loginWithGoogle} className="flex items-center justify-center w-full md:w-1/2 h-20 mb-4 md:mb-0 border-2 rounded-lg border-[#D2D2D2] text-lg text-[#2E2E2E] gap-3 cursor-pointer">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="GoogleIcon" />
-                <span className="text-gray-600 font-semibold">Google Account</span>
-              
-              </div>
+            <div
+                 onClick={loginWithGoogle}
+                 className="flex items-center justify-center w-full md:w-1/2 h-20 mb-4 md:mb-0 border-2 rounded-lg border-[#D2D2D2] text-lg text-[#2E2E2E] gap-3 cursor-pointer">
+           <img
+               src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"
+               alt="GoogleIcon"
+               className="w-8 h-8" // Ensure proper sizing
+            />
+          <span className="text-gray-600 font-semibold">Google Account</span>
+            </div>
               <div className="flex items-center justify-center w-full md:w-1/2 h-20 md:ml-4 border-2 rounded-lg border-[#D2D2D2] text-lg text-[#2E2E2E] gap-3 cursor-pointer">
                 <img className="w-6 h-6" src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="FacebookIcon" />
                 <span className="text-gray-600 font-semibold">Facebook Account</span>

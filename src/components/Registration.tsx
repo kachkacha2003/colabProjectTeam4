@@ -1,10 +1,9 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-// import { useEffect } from "react";
 import {useNavigate } from "react-router-dom";
 import axios from "axios";
-// import axios, { AxiosResponse } from "axios";
+
 
 interface IFormType {
   username: string;
@@ -38,8 +37,6 @@ export function Registration() {
   const {
     register,
     handleSubmit,
-    // setValue,
-    // watch,
     formState: { errors },
   } = useForm<IFormType>({
     resolver: yupResolver(schema),

@@ -18,18 +18,6 @@ function Header() {
     setissearch(!issearch);
   };
 
-  //  const navigate=useNavigate();
-
-  // const toLogin=()=>{
-  //  navigate("/login")
-  // }
-  // const toSignUp=()=>{
-  //   navigate("/register")
-  // }
-  // const toHome=()=>{
-  //   navigate("/home")
-  // }
-
 
   return (
     <div>
@@ -46,30 +34,34 @@ function Header() {
        
        </Link>  
           <nav className="hidden md:flex items-center gap-[40px] text-slate-950">
-            <a
+            <Link
               className="font-semibold hover:text-red-400 cursor-pointer"
-              href=""
+              // to="/Shop"
+               to="/#"
             >
               Shop
-            </a>
-            <a
+            </Link>
+            <Link
               className="font-semibold hover:text-red-400 cursor-pointer"
-              href="#about"
+              // to="New Arrivals"
+               to="/#"
             >
               New Arrivals
-            </a>
-            <a
+            </Link>
+            <Link
               className="font-semibold hover:text-red-400 cursor-pointer"
-              href="#services"
+              // to="/Sales"
+               to="/#"
             >
               Sales
-            </a>
-            <a
+            </Link>
+            <Link
               className="font-semibold hover:text-red-400 cursor-pointer"
-              
+              // to="/Journel"
+              to="/#"
             >
               Journel
-            </a>
+            </Link>
           </nav>
         </div>
 

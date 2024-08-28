@@ -103,12 +103,11 @@ export function Registration() {
 // }
 
   return (
-    <div className="flex items-center justify-center h-screen p-4  bg-[url(https://wallpapers.com/blog/wp-content/uploads/2023/06/glitter-golden-bokeh-lights-scaled.jpeg)] ">
+<div className="main-div flex bg-no-repeat bg-cover items-center justify-center min-h-screen p-4 bg-[url(https://wallpapers.com/blog/wp-content/uploads/2023/06/glitter-golden-bokeh-lights-scaled.jpeg)]">
       <div className="flex bg-[#FFFBFA] rounded-[42px] overflow-hidden max-w-full md:max-w-[83rem] w-full">
     
-        <div className="hidden md:block w-[755px] rounded-l-[42px] bg-cover bg-center bg-[url(https://s3-alpha-sig.figma.com/img/881b/e016/1dd5b741b8cae42b2b56a5fdea8a8e76?Expires=1724025600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=qBLK~iVNBoN9Sk9~1zUFknmBRkKVnr3tt4NpBfB2n1WX8BCNQLl50WNyKJ0vRIO-GkFnQ2j8j-q7cS7fJMNTB61DGAvZGqlBJKrvS5k1-Y62CVbQ2r7OVa~6qWDIFSXcVXdn6EcJOhHRX~jWHShLUHwH9MgP9kpEIrpJsfYUXMr3bIo9fspzIVUppqBkg1MvXmhE17ZgSvVegccPMBN1I2SYwvLPp11HhdZvBu5mGj3i6THOrLotbi9Cance31JPhRmGLD2uQCnJmf7h~xWEn7yU4JlOqE07VJel7nbO4CD5CmlEseIwzd6V8W2O6LDsIagffPpA177G9mZOOIA2qA__)]">
-        </div>
-        
+      <div className="hidden md:block w-[755px] rounded-l-[42px] bg-cover bg-center bg-[url('https://s3-alpha-sig.figma.com/img/881b/e016/1dd5b741b8cae42b2b56a5fdea8a8e76?Expires=1724025600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=qBLK~iVNBoN9Sk9~1zUFknmBRkKVnr3tt4NpBfB2n1WX8BCNQLl50WNyKJ0vRIO-GkFnQ2j8j-q7cS7fJMNTB61DGAvZGqlBJKrvS5k1-Y62CVbQ2r7OVa~6qWDIFSXcVXdn6EcJOhHRX~jWHShLUHwH9MgP9kpEIrpJsfYUXMr3bIo9fspzIVUppqBkg1MvXmhE17ZgSvVegccPMBN1I2SYwvLPp11HhdZvBu5mGj3i6THOrLotbi9Cance31JPhRmGLD2uQCnJmf7h~xWEn7yU4JlOqE07VJel7nbO4CD5CmlEseIwzd6V8W2O6LDsIagffPpA177G9mZOOIA2qA__')]">
+</div>
 
         <div className="flex-1 px-4 py-12 md:px-24">
           <div className="flex flex-col">

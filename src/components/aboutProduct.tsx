@@ -72,7 +72,7 @@ console.log(color)
 
   if (!product) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
+      <div className="flex items-center justify-center min-h-screen  bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
         <div className="flex flex-col items-center justify-center space-y-4">
           <div className="relative">
             <div className="w-[110px] h-[100px] border-4 border-t-4 border-white rounded-full animate-spin"></div>
@@ -87,7 +87,7 @@ console.log(color)
   }
 
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-between max-w-7xl mx-auto p-6">
+    <div className="flex flex-col h-[100vh] lg:flex-row items-center justify-between max-w-7xl mx-auto p-6">
       <div className="w-full lg:w-1/2 flex ">
         <img
           src={product.image}

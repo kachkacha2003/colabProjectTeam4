@@ -16,9 +16,13 @@ interface ProducttwoProps {
     productPrice: number,
     productImage: string
   ) => void;
+  handleRemoveFromCart: (productId: number) => void;
 }
 
-const Producttwo: React.FC<ProducttwoProps> = ({ handleAddToCart }) => {
+const Producttwo: React.FC<ProducttwoProps> = ({
+  handleAddToCart,
+  handleRemoveFromCart,
+}) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
   const [dragging, setDragging] = useState(false);
@@ -142,30 +146,38 @@ const Producttwo: React.FC<ProducttwoProps> = ({ handleAddToCart }) => {
             >
               <div className="flex items-end relative">
                 <img
+                  onClick={() => handleProductClick(item.id)}
                   className="h-56 w-[100%] flex items-center"
                   src={item.image}
                   alt={item.name}
                 />
-                <p
-                  onClick={() =>
-                    handleAddToCart(
-                      Number(item.id),
-                      item.name,
-                      Number(item.price),
-                      item.image
-                    )
-                  }
-                  className="absolute ml-[220px] cursor-pointer"
-                >
-                  +
-                </p>
               </div>
-              <div
-                onClick={() => handleProductClick(item.id)}
-                className="flex flex-col gap-[10px]"
-              >
+              <div className="flex flex-col gap-[10px]">
                 <h2 className="text-base font-medium mt-2">{item.name}</h2>
-                <p className="text-lg text-gray-600">{item.price}$</p>
+                <div className="flex gap-[40px]">
+                  <p className="text-lg text-gray-600">{item.price}$</p>
+                  <div className="flex cursor-pointer gap-[20px]">
+                    <p
+                      onClick={() =>
+                        handleAddToCart(
+                          Number(item.id),
+                          item.name,
+                          Number(item.price),
+                          item.image
+                        )
+                      }
+                      className="text-2xl"
+                    >
+                      +
+                    </p>
+                    <p
+                      onClick={() => handleRemoveFromCart(Number(item.id))}
+                      className="text-2xl"
+                    >
+                      -
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           ))}

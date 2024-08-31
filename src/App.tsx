@@ -45,6 +45,23 @@ function App() {
     });
   };
 
+  const handleRemoveFromCart = (productId: number) => {
+    setCart((prevCart) => {
+      const existingProduct = prevCart.find(
+        (item) => item.productId === productId
+      );
+      if (existingProduct && existingProduct.quantity > 1) {
+        return prevCart.map((item) =>
+          item.productId === productId
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        );
+      } else {
+        return prevCart.filter((item) => item.productId !== productId);
+      }
+    });
+  };
+
   return (
     <BrowserRouter>
       <Header cart={cart} />
@@ -58,7 +75,10 @@ function App() {
             <div>
               <Home />
               <Product />
-              <Producttwo handleAddToCart={handleAddToCart} />
+              <Producttwo
+                handleAddToCart={handleAddToCart}
+                handleRemoveFromCart={handleRemoveFromCart}
+              />
               <Chose />
               <Footer />
             </div>

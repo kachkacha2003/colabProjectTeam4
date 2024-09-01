@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Burger from "/public/img/List.png";
 import Logo from "/public/img/Logo.png";
 import Search from "/public/img/MagnifyingGlass.png";
@@ -124,6 +124,10 @@ function Header({ cart }: HeaderProps) {
                       <div>
                         <p className="text-sm">{item.productName}</p>
                         <p className="text-sm">{item.productPrice}$</p>
+                        <p className="text-sm">
+                          Quantity: {item.quantity}
+                        </p>{" "}
+                        {/* Display quantity */}
                       </div>
                     </div>
                   ))

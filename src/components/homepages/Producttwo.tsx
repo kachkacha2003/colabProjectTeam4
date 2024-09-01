@@ -158,6 +158,12 @@ const Producttwo: React.FC<ProducttwoProps> = ({
                   <p className="text-lg text-gray-600">{item.price}$</p>
                   <div className="flex cursor-pointer gap-[20px]">
                     <p
+                      onClick={() => handleRemoveFromCart(Number(item.id))}
+                      className="text-2xl"
+                    >
+                      -
+                    </p>
+                    <p
                       onClick={() =>
                         handleAddToCart(
                           Number(item.id),
@@ -169,12 +175,6 @@ const Producttwo: React.FC<ProducttwoProps> = ({
                       className="text-2xl"
                     >
                       +
-                    </p>
-                    <p
-                      onClick={() => handleRemoveFromCart(Number(item.id))}
-                      className="text-2xl"
-                    >
-                      -
                     </p>
                   </div>
                 </div>

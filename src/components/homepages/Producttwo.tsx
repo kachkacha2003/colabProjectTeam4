@@ -58,7 +58,7 @@ const Producttwo: React.FC<ProducttwoProps> = ({
   }, []);
 
   const handleProductClick = (id: string) => {
-    navigate(`/product/${id}`);
+    navigate(`/aboutProduct/${id}`);
   };
 
   const handleDragStart = (

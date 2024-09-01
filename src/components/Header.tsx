@@ -5,7 +5,7 @@ import Search from "/public/img/MagnifyingGlass.png";
 import Heart from "/public/img/Heart.png";
 import Bag from "/public/img/Bag.png";
 import x from "/public/img/black-x-mark-transparent-png-1.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 interface CartItem {
   productId: number;

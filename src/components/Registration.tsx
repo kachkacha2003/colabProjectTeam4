@@ -1,9 +1,8 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-// import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 interface IFormType {
   username: string;
@@ -18,14 +17,16 @@ interface IFormType {
 const schema = yup
   .object({
     username: yup.string().required("Username is a required field"),
-    first_name:yup.string().required( " First name is a required field"),
+    first_name: yup.string().required("First name is a required field"),
     last_name: yup.string().required("Last name is a required field"),
     password: yup.string().required("Password is a required field"),
     confirm_password: yup
       .string()
       .oneOf([yup.ref("password")], "Passwords must match")
       .required("Please confirm your password"),
-    terms: yup.boolean().oneOf([true], "You must accept the terms and conditions"),
+    terms: yup
+      .boolean()
+      .oneOf([true], "You must accept the terms and conditions"),
     email: yup
       .string()
       .email("Email is not valid")
@@ -34,184 +35,250 @@ const schema = yup
   .required();
 
 export function Registration() {
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    // setValue,
-    // watch,
     formState: { errors },
   } = useForm<IFormType>({
     resolver: yupResolver(schema),
   });
-
-  const onSubmit: SubmitHandler<IFormType> = (data) => {
-    // usenavigate homepage
+  const navigate = useNavigate();
+  const onSubmit: SubmitHandler<IFormType> = async (data: unknown) => {
     console.log(data);
+    try {
+      const response = await axios.post(
+        "https://ann1.pythonanywhere.com/users/register/",
+        data
+      );
+      console.log("Registration successful:", response.data);
+      navigate("/home");
+    } catch (error) {
+      console.error("Error during registration:", error);
+    }
   };
-//   function loadGapiScript(): Promise<void> {
-//     return new Promise((resolve, reject) => {
-//         const script = document.createElement('script');
-//         script.src = 'https://apis.google.com/js/api.js';
-//         script.onload = () => resolve();
-//         script.onerror = (error) => reject(error);
-//         document.head.appendChild(script);
-//     });
-// }
+// login with googles
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:3000/auth/google";
+  };  
 
-// async function initializeGapi(): Promise<void> {
-//     return new Promise((resolve, reject) => {
-//         gapi.load('client:auth2', async () => {
-//             try {
-//                 await gapi.client.init({
-//                     clientId: 'YOUR_CLIENT_ID.apps.googleusercontent.com',
-//                     scope: 'profile email'
-//                 });
-//                 resolve();
-//             } catch (error) {
-//                 reject(error);
-//             }
-//         });
-//     });
-// }
-//   async function loginWithGoogle(): Promise<void> {
-//     try {
-//       await loadGapiScript();
-//       await initializeGapi();
-//         const authInstance = window.gapi.auth2.getAuthInstance();
-//         const googleUser: gapi.auth2.GoogleUser = await authInstance.signIn();
 
-//         const idToken: string = googleUser.getAuthResponse().id_token;
 
-//         const response: AxiosResponse = await axios.post("https://ann1.pythonanywhere.com/auth/auth_google_login_create", {
-//             token: idToken
-//         });
+  //login with facebook
 
-//         console.log('Login successful:', response.data);
-        
-//     } catch (error: unknown) {
-//         console.error('Error during Google login:', error);
-//     }
-// }
 
+  // export function Registration() {
+  //   const navigate = useNavigate();
+  
+  //   const handleFacebookLogin = async (response) => {
+  //     try {
+  //       const result = await axios.post(
+  //         'https://yourbackend.com/auth/facebook',
+  //         { accessToken: response.accessToken, userID: response.userID }
+  //       );
+  //       console.log('Facebook login successful:', result.data);
+  //       navigate('/home');
+  //     } catch (error) {
+  //       console.error('Facebook login failed:', error);
+  //     }
+  //   };
   return (
-    <div className="flex items-center justify-center h-screen p-4  bg-[url(https://wallpapers.com/blog/wp-content/uploads/2023/06/glitter-golden-bokeh-lights-scaled.jpeg)] ">
-      <div className="flex bg-[#FFFBFA] rounded-[42px] overflow-hidden max-w-full md:max-w-[83rem] w-full">
-    
-        <div className="hidden md:block w-[755px] rounded-l-[42px] bg-cover bg-center bg-[url(https://s3-alpha-sig.figma.com/img/881b/e016/1dd5b741b8cae42b2b56a5fdea8a8e76?Expires=1724025600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=qBLK~iVNBoN9Sk9~1zUFknmBRkKVnr3tt4NpBfB2n1WX8BCNQLl50WNyKJ0vRIO-GkFnQ2j8j-q7cS7fJMNTB61DGAvZGqlBJKrvS5k1-Y62CVbQ2r7OVa~6qWDIFSXcVXdn6EcJOhHRX~jWHShLUHwH9MgP9kpEIrpJsfYUXMr3bIo9fspzIVUppqBkg1MvXmhE17ZgSvVegccPMBN1I2SYwvLPp11HhdZvBu5mGj3i6THOrLotbi9Cance31JPhRmGLD2uQCnJmf7h~xWEn7yU4JlOqE07VJel7nbO4CD5CmlEseIwzd6V8W2O6LDsIagffPpA177G9mZOOIA2qA__)]">
-        </div>
+    <div className="main-div flex bg-no-repeat bg-cover items-center justify-center min-h-screen p-4 bg-[url(https://wallpapers.com/blog/wp-content/uploads/2023/06/glitter-golden-bokeh-lights-scaled.jpeg)]">
+      <div className="flex bg-[#FFFBFA] rounded-[20px] overflow-hidden max-w-full md:max-w-[70rem] w-full h-auto">
+        <div className="hidden md:block w-[50%] rounded-l-[20px] bg-cover bg-center bg-[url('https://img.freepik.com/premium-photo/3d-vector-illustration-web-dev-design-with-laptop-phone-coding-tools_1251065-6821.jpg')]"></div>
+        <div className="flex-1 px-6 py-8 md:px-12">
+          <div className="flex flex-col">
+            <div className="flex flex-col md:flex-row justify-between mb-8">
+              <div className="flex items-center justify-center w-full md:w-1/2 h-14 mb-4 md:mb-0 border-2 rounded-lg border-[#D2D2D2] text-md text-[#2E2E2E] gap-3 cursor-pointer"
+                onClick={handleGoogleLogin}
+               >
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"
+                  alt="GoogleIcon"
+                  className="w-6 h-6"
+                />
+                <span className="text-gray-600 font-semibold">
+                  Google Account
+                </span>
+              </div>
+              <div className="flex items-center justify-center w-full md:w-1/2 h-14 md:ml-4 border-2 rounded-lg border-[#D2D2D2] text-md text-[#2E2E2E] gap-3 cursor-pointer">
+      {/* <FacebookLogin
+        appId="YOUR_FACEBOOK_APP_ID"
+        autoLoad={false}
+        fields="name,email,picture"
+        callback={handleFacebookLogin}
+        render={(renderProps) => (
+          <div onClick={renderProps.onClick} className="flex items-center">
+            <img
+              className="w-6 h-6"
+              src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg"
+              alt="FacebookIcon"
+            />
+            <span className="text-gray-600 font-semibold ml-2">
+              Facebook Account
+            </span>
+          </div>
+        )}
+      /> */}
+      <div  className="flex items-center">
+            <img
+              className="w-6 h-6"
+              src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg"
+              alt="FacebookIcon"
+            />
+            <span className="text-gray-600 font-semibold ml-2">
+              Facebook Account
+            </span>
+          </div>
+      </div>
         
 
-        <div className="flex-1 px-4 py-12 md:px-24">
-          <div className="flex flex-col">
-            <div className="flex flex-col md:flex-row justify-between mb-12">
-              <div  className="flex items-center justify-center w-full md:w-1/2 h-20 mb-4 md:mb-0 border-2 rounded-lg border-[#D2D2D2] text-lg text-[#2E2E2E] gap-3 cursor-pointer">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="GoogleIcon" />
-                <span className="text-gray-600 font-semibold">Google Account</span>
-              </div>
-              <div className="flex items-center justify-center w-full md:w-1/2 h-20 md:ml-4 border-2 rounded-lg border-[#D2D2D2] text-lg text-[#2E2E2E] gap-3 cursor-pointer">
-                <img className="w-6 h-6" src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="FacebookIcon" />
-                <span className="text-gray-600 font-semibold">Facebook Account</span>
-              </div>
+        
+      <div>
+    </div>
             </div>
 
             <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
-           <label className="text-2xl font-semibold text-gray-600" htmlFor="username">Username</label>
+              <label
+                className="text-xl font-semibold text-gray-600 mb-1"
+                htmlFor="username"
+              >
+                Username
+              </label>
               <input
-                className="border-2 border-[#D2D2D2] rounded-lg mb-10 pl-4 w-full md:w-[537px] h-16 placeholder-gray-500"
+                className="border-2 border-[#D2D2D2] rounded-lg mb-2 pl-4 w-full md:w-[500px] h-12 placeholder-gray-500"
                 type="text"
                 {...register("username")}
                 placeholder="Enter your full name"
                 name="username"
                 id="username"
               />
-              {errors.username && <p className=" font-semibold  text-red-500 xs:text-[20px]  sm:text-[25px] mt-[-25px] mb-[10px]  ">{errors.username.message}</p>}
+              {errors.username && (
+                <p className="text-red-500 text-sm font-semibold mb-2">
+                  {errors.username.message}
+                </p>
+              )}
 
-
-              <label className="text-2xl font-semibold text-gray-600" htmlFor="first_name">First name</label>
+              <label
+                className="text-xl font-semibold text-gray-600 mb-1"
+                htmlFor="first_name"
+              >
+                First name
+              </label>
               <input
-                className="border-2 border-[#D2D2D2] rounded-lg mb-10 pl-4 w-full md:w-[537px] h-16 placeholder-gray-500"
+                className="border-2 border-[#D2D2D2] rounded-lg mb-2 pl-4 w-full md:w-[500px] h-12 placeholder-gray-500"
                 type="text"
                 {...register("first_name")}
-                placeholder="Enter your full name"
+                placeholder="Enter your first name"
                 name="first_name"
                 id="first_name"
               />
-              {errors.first_name && <p className=" font-semibold  text-red-500 xs:text-[20px]  sm:text-[25px] mt-[-25px] mb-[10px]  ">{errors.first_name.message}</p>}
+              {errors.first_name && (
+                <p className="text-red-500 text-sm font-semibold mb-2">
+                  {errors.first_name.message}
+                </p>
+              )}
 
-              <label className="text-2xl font-semibold text-gray-600" htmlFor="last_name">Last name</label>
+              <label
+                className="text-xl font-semibold text-gray-600 mb-1"
+                htmlFor="last_name"
+              >
+                Last name
+              </label>
               <input
-                className="border-2 border-[#D2D2D2] rounded-lg mb-10 pl-4 w-full md:w-[537px] h-16 placeholder-gray-500"
+                className="border-2 border-[#D2D2D2] rounded-lg mb-2 pl-4 w-full md:w-[500px] h-12 placeholder-gray-500"
                 type="text"
                 {...register("last_name")}
-                placeholder="Enter your Last name"
+                placeholder="Enter your last name"
                 name="last_name"
                 id="last_name"
               />
-              {errors.last_name && <p className="text-red-500 font-semibold  xs:text-[20px] sm:text-[25px] mt-[-25px] mb-[10px] ">{errors.last_name.message}</p>}
+              {errors.last_name && (
+                <p className="text-red-500 text-sm font-semibold mb-2">
+                  {errors.last_name.message}
+                </p>
+              )}
 
-              <label className="text-2xl font-semibold text-gray-600" htmlFor="email">Email</label>
+              <label
+                className="text-xl font-semibold text-gray-600 mb-1"
+                htmlFor="email"
+              >
+                Email
+              </label>
               <input
                 type="text"
                 {...register("email")}
                 placeholder="Please enter your email address"
                 id="email"
-                className="border-2 border-[#D2D2D2] mb-10 rounded-lg pl-4 w-full md:w-[537px] h-16 placeholder-gray-500"
+                className="border-2 border-[#D2D2D2] rounded-lg mb-2 pl-4 w-full md:w-[500px] h-12 placeholder-gray-500"
               />
-              {errors.email && <p className="text-red-500 font-semibold  xs:text-[20px] sm:text-[25px] mt-[-25px] mb-[10px] ">{errors.email.message}</p>}
+              {errors.email && (
+                <p className="text-red-500 text-sm font-semibold mb-2">
+                  {errors.email.message}
+                </p>
+              )}
 
-              <label className="text-2xl font-semibold text-gray-600" htmlFor="password">Password</label>
+              <label
+                className="text-xl font-semibold text-gray-600 mb-1"
+                htmlFor="password"
+              >
+                Password
+              </label>
               <input
                 type="password"
                 {...register("password")}
                 placeholder="Please enter your password"
                 name="password"
                 id="password"
-                className="border-2 border-[#D2D2D2] mb-10 rounded-lg pl-4 w-full md:w-[537px] h-16 placeholder-gray-500"
+                className="border-2 border-[#D2D2D2] rounded-lg mb-2 pl-4 w-full md:w-[500px] h-12 placeholder-gray-500"
               />
-              {errors.password && <p className="text-red-500 font-semibold xs:text-[20px] sm:text-[25px] mt-[-25px] mb-[10px]  ">{errors.password.message}</p>}
+              {errors.password && (
+                <p className="text-red-500 text-sm font-semibold mb-2">
+                  {errors.password.message}
+                </p>
+              )}
 
-              <label className="text-2xl font-semibold text-gray-600" htmlFor="confirm_password">Confirm Password</label>
+              <label
+                className="text-xl font-semibold text-gray-600 mb-1"
+                htmlFor="confirm_password"
+              >
+                Confirm Password
+              </label>
               <input
                 type="password"
                 {...register("confirm_password")}
                 placeholder="Please confirm your password"
                 name="confirm_password"
                 id="confirm_password"
-                className="border-2 border-[#D2D2D2] mb-10 rounded-lg pl-4 w-full md:w-[537px] h-16 placeholder-gray-500"
+                className="border-2 border-[#D2D2D2] rounded-lg mb-2 pl-4 w-full md:w-[500px] h-12 placeholder-gray-500"
               />
-              {errors.confirm_password && <p className="text-red-500 font-semibold xs:text-[20px] sm:text-[25px] mt-[-25px] mb-[10px]  ">{errors.confirm_password.message}</p>}
+              {errors.confirm_password && (
+                <p className="text-red-500 text-sm font-semibold mb-2">
+                  {errors.confirm_password.message}
+                </p>
+              )}
 
-              <div className="flex items-center gap-2 mb-4">
+              <label className="text-gray-700 text-sm font-semibold mb-2 flex items-start">
                 <input
-                  className="w-5 h-5 border border-[#D2D2D2]"
                   type="checkbox"
                   {...register("terms")}
+                  name="terms"
+                  className="h-5 w-5 border-2 rounded mr-2"
                 />
-                <span className="text-gray-600 text-lg">Remember Me</span>
-              </div>
+                Accept our Terms and Conditions
+              </label>
+              {errors.terms && (
+                <p className="text-red-500 text-sm font-semibold mb-2">
+                  {errors.terms.message}
+                </p>
+              )}
 
-              
-               <div className="md:pl-[50px]">
-               <button
-                className="mt-4 w-full md:w-[420px] h-16 bg-black text-white rounded-full"
+              <button
                 type="submit"
+                className="w-full md:w-[500px] mt-4 h-12 rounded-lg bg-[#1E293B] hover:bg-[#334155] text-white text-lg font-semibold"
               >
                 Register
               </button>
-               <div className=" flex justify-center text-[25px] py-2 pr-[4rem] text-gray-600 font-medium xs:text-[16px] sm:text-[25px] md:text-2xl">
-              Already have an account?{" "}
-              <a
-                className="text-yellow-500 cursor-pointer"
-                onClick={() => navigate("/login")}
-              >
-                Log in
-              </a>
-            </div>
-               </div>
             </form>
-
-           
           </div>
         </div>
       </div>

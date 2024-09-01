@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
-import { useNavigate } from "react-router-dom";
+import Product from "./Product";
 
 interface Product {
   id: string; 
@@ -10,16 +10,16 @@ interface Product {
   price: string;
   title: string;
 }
+console.log(Product)
 
-const Producttwo: React.FC = () => {
-  const navigate = useNavigate();
-  const [products, setProducts] = useState<Product[]>([]);
+const Producttwo: React.FC<{ addCard: () => void }> = ({ addCard }) => {
+  const [products, setProducts] = useState<any[]>([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
   const [dragging, setDragging] = useState(false);
   const [startPosition, setStartPosition] = useState(0);
   const [currentTranslate, setCurrentTranslate] = useState(0);
   const [prevTranslate, setPrevTranslate] = useState(0);
-  const navigate = useNavigate(); // Use navigate for routing
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -48,8 +48,9 @@ const Producttwo: React.FC = () => {
   }, []);
 
   const handleProductClick = (id: string) => {
-    navigate(`/product/${id}`);
+    navigate(`/aboutProduct/${id}`);
   };
+  
 
   const handleDragStart = (
     event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
@@ -128,12 +129,11 @@ const Producttwo: React.FC = () => {
           </div>
         </div>
       ) : (
-        <div className="flex gap-10 justify-center ">
+        <div className="flex gap-10 justify-center">
           {products.map((item, index) => (
             <div
               key={index}
-              className="cursor-pointer product-item duration-300 hover:scale-105 hover:shadow-[0px_15px_40px_rgba(63,10,255,0.5)]  md:w-[234px] flex-shrink-0 h-82 flex flex-col "
-              onClick={() => navigate(`/aboutProduct/${item.id}`)} // Added onClick to each product item
+              className="cursor-pointer product-item duration-300 hover:scale-105 hover:shadow-[0px_15px_40px_rgba(63,10,255,0.5)] md:w-[234px] flex-shrink-0 h-82 flex flex-col"
             >
               <div className="flex items-end relative">
                 <img
@@ -141,7 +141,12 @@ const Producttwo: React.FC = () => {
                   src={item.image}
                   alt={item.name}
                 />
-                <p className="absolute ml-[220px] cursor-pointer">+</p>
+                <p
+                  className="absolute ml-[220px] cursor-pointer"
+                  onClick={addCard}
+                >
+                  +
+                </p>
               </div>
               <div
                 onClick={() => handleProductClick(item.id)}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import Burger from "/public/img/List.png";
 import Logo from "/public/img/Logo.png";
 import Search from "/public/img/MagnifyingGlass.png";
@@ -7,13 +7,19 @@ import Bag from "/public/img/Bag.png";
 import x from "/public/img/black-x-mark-transparent-png-1.png";
 import { Link} from "react-router-dom";
 
-function Header() {
+
+interface HeaderProps {
+  counter: number; // Specify that counter is a number
+}
+
+const Header: FC<HeaderProps> = ({ counter }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [issearch, setissearch] = useState(false);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
   const toggsearch = () => {
     setissearch(!issearch);
   };
@@ -93,7 +99,7 @@ function Header() {
           </div>
           <div className="flex gap-[3px] items-center">
             <img src={Bag} alt="Cart" />
-            <p>0</p>
+            <p>{counter}</p>
           </div>
         </div>
 

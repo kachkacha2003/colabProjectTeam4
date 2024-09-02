@@ -8,6 +8,7 @@ import Footer from "./components/Homepages/Footer";
 import Chose from "./components/Homepages/Chose";
 import { Registration } from "./components/Registration";
 import { Login } from "./components/Login";
+import Shop from "./components/Homepages/Shop"; // Import the Shop component
 
 interface CartItem {
   productId: number;
@@ -82,6 +83,15 @@ function App() {
               <Chose />
               <Footer />
             </div>
+          }
+        />
+        <Route
+          path="/shop"
+          element={
+            <Shop
+              handleAddToCart={handleAddToCart}
+              handleRemoveFromCart={handleRemoveFromCart}
+            />
           }
         />
       </Routes>

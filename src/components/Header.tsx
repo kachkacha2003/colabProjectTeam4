@@ -1,11 +1,11 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Burger from "/public/img/List.png";
 import Logo from "/public/img/Logo.png";
 import Search from "/public/img/MagnifyingGlass.png";
 import Heart from "/public/img/Heart.png";
 import Bag from "/public/img/Bag.png";
 import x from "/public/img/black-x-mark-transparent-png-1.png";
-import { useNavigate } from "react-router-dom";
 
 interface CartItem {
   productId: number;
@@ -38,21 +38,13 @@ function Header({ cart }: HeaderProps) {
 
   const navigate = useNavigate();
 
-  const toLogin = () => {
-    navigate("/login");
-  };
-
-  const toSignUp = () => {
-    navigate("/register");
-  };
-
   const toHome = () => {
     navigate("/home");
   };
 
   return (
     <div className="relative">
-      <div className="flex bg-white justify-between p-[15px] relative font-styrene">
+      <div className="flex bg-white justify-between  p-[15px] relative font-styrene">
         <img
           className="cursor-pointer md:hidden"
           src={Burger}
@@ -67,18 +59,30 @@ function Header({ cart }: HeaderProps) {
             alt="Logo"
           />
           <nav className="hidden md:flex items-center gap-[40px] text-slate-950">
-            <a className="font-semibold hover:text-red-400 cursor-pointer">
+            <Link
+              to="/shop"
+              className="font-semibold hover:text-red-400 cursor-pointer"
+            >
               Shop
-            </a>
-            <a className="font-semibold hover:text-red-400 cursor-pointer">
+            </Link>
+            <Link
+              to="/new-arrivals"
+              className="font-semibold hover:text-red-400 cursor-pointer"
+            >
               New Arrivals
-            </a>
-            <a className="font-semibold hover:text-red-400 cursor-pointer">
+            </Link>
+            <Link
+              to="/sales"
+              className="font-semibold hover:text-red-400 cursor-pointer"
+            >
               Sales
-            </a>
-            <a className="font-semibold hover:text-red-400 cursor-pointer">
+            </Link>
+            <Link
+              to="/journal"
+              className="font-semibold hover:text-red-400 cursor-pointer"
+            >
               Journal
-            </a>
+            </Link>
           </nav>
         </div>
 
@@ -89,18 +93,18 @@ function Header({ cart }: HeaderProps) {
             src={Search}
             alt="Search"
           />
-          <a
-            onClick={toLogin}
+          <Link
+            to="/login"
             className="hidden md:inline font-semibold hover:text-red-400 cursor-pointer"
           >
             Log in
-          </a>
-          <a
-            onClick={toSignUp}
+          </Link>
+          <Link
+            to="/register"
             className="hidden md:inline font-semibold hover:text-red-400 cursor-pointer"
           >
             Sign up
-          </a>
+          </Link>
           <div className="flex gap-[3px] items-center">
             <img src={Heart} alt="Favorites" />
             <p>0</p>
@@ -112,7 +116,7 @@ function Header({ cart }: HeaderProps) {
             </div>
 
             {show && (
-              <div className="absolute top-[50px] right-[0px] w-[250px] bg-gray-200 p-[20px] bg-white z-50">
+              <div className="absolute top-[50px]  bg-gray-100 right-[0px] w-[250px] bg-gray-200 p-[20px] bg-white z-50">
                 {cart.length > 0 ? (
                   cart.map((item) => (
                     <div key={item.productId} className="flex mb-4 gap-4">
@@ -124,10 +128,7 @@ function Header({ cart }: HeaderProps) {
                       <div>
                         <p className="text-sm">{item.productName}</p>
                         <p className="text-sm">{item.productPrice}$</p>
-                        <p className="text-sm">
-                          Quantity: {item.quantity}
-                        </p>{" "}
-                        {/* Display quantity */}
+                        <p className="text-sm">Quantity: {item.quantity}</p>
                       </div>
                     </div>
                   ))
@@ -140,7 +141,7 @@ function Header({ cart }: HeaderProps) {
         </div>
 
         {isSidebarOpen && (
-          <div className="absolute top-0 left-0 w-[55%] h-[100vh] bg-gray-200 shadow-lg z-50">
+          <div className="absolute top-0 left-0 bg-gray-300  w-[55%] h-[100vh] bg-gray-200 shadow-lg z-50">
             <div>
               <button className="p-[15px]" onClick={toggleSidebar}>
                 X
@@ -148,29 +149,52 @@ function Header({ cart }: HeaderProps) {
               <nav>
                 <ul className="text-slate-950 my-[20px] text-[18px] font-[400px] p-[15px] flex flex-col gap-[20px]">
                   <li>
-                    <a className="hover:text-[20px] cursor-pointer">Log in</a>
+                    <Link
+                      to="/login"
+                      className="hover:text-[20px] cursor-pointer"
+                    >
+                      Log in
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      onClick={toSignUp}
+                    <Link
+                      to="/register"
                       className="hover:text-[20px] cursor-pointer"
                     >
                       Sign up
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="hover:text-[20px] cursor-pointer">Shop</a>
+                    <Link
+                      to="/shop"
+                      className="hover:text-[20px] cursor-pointer"
+                    >
+                      Shop
+                    </Link>
                   </li>
                   <li>
-                    <a className="hover:text-[20px] cursor-pointer">
+                    <Link
+                      to="/new-arrivals"
+                      className="hover:text-[20px] cursor-pointer"
+                    >
                       New Arrivals
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="hover:text-[20px] cursor-pointer">Sales</a>
+                    <Link
+                      to="/sales"
+                      className="hover:text-[20px] cursor-pointer"
+                    >
+                      Sales
+                    </Link>
                   </li>
                   <li>
-                    <a className="hover:text-[20px] cursor-pointer">Journal</a>
+                    <Link
+                      to="/journal"
+                      className="hover:text-[20px] cursor-pointer"
+                    >
+                      Journal
+                    </Link>
                   </li>
                 </ul>
               </nav>

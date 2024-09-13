@@ -1,4 +1,4 @@
-import{ useState } from "react";
+import { useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./components/homepages/Home";
@@ -18,10 +18,10 @@ interface CartItem {
   quantity: number;
 }
 
-
 function App() {
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [counter, setCounter] = useState(0);
+  const [counter, setCounter] = useState<number>(0);
+  console.log(setCounter)
 
   const handleAddToCart = (
     productId: number,
@@ -59,10 +59,6 @@ function App() {
         return prevCart.filter((item) => item.productId !== productId);
       }
     });
-  };
-
-  const addCard = () => {
-    setCounter(counter + 1);
   };
 
   return (
